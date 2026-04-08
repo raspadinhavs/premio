@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Raspadinha - Jogue e Ganhe</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" sizes="16x16">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/all.min.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-left">
+                <img src="images/logo.webp" alt="Logo" class="logo">
+                <div class="divider"></div>
+                <span class="title">Raspadinha</span>
+            </div>
+            <div class="header-right">
+                <div class="saldo">
+
+                    <strong id="saldoCarteira">R$ 0,00</strong>
+                </div>
+                <div class="usuario">
+                    <i class="fas fa-user"></i>
+                    <span id="nomeUsuario">Usuário</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="card">
+                <!-- Cabeçalho do Card -->
+                <div class="card-header">
+                    <div class="logo-title">
+                        <img src="images/trevo.webp" alt="Trevo da Sorte" class="trevo-img"
+                            style="width:30px; height:30px;">
+                        <h2 class="card-title">Sua Raspadinha</h2>
+                    </div>
+                    <p class="tentativas">Tentativas restantes: <strong id="contadorTentativas">3/3</strong></p>
+                </div>
+
+                <!-- Área da Raspadinha -->
+                <div class="raspadinha-area">
+                    <div class="raspadinha-wrapper">
+                        <div class="raspadinha-container" id="raspadinhaContainer">
+                            <img src="images/raspa2.gif" alt="Raspadinha" class="raspadinha-overlay"
+                                id="raspadinhaOverlay">
+                            <canvas id="scratchCanvas" width="320" height="320"></canvas>
+                            <div class="premios-grid" id="premiosGrid">
+                                <!-- Grid 3x3 será gerado via JavaScript -->
+                            </div>
+                        </div>
+                        <button class="btn-jogar" id="btnJogar">
+                            <i class="fas fa-play"></i> Jogar agora
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Instruções -->
+                <div class="instrucoes-alerta">
+                    <div class="alerta-content">
+                        <div class="alerta-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="alerta-texto">
+                            <h4>Retire 3 imagens iguais e conquiste seu prêmio!</h4>
+                            <p>O valor correspondente será creditado automaticamente na sua conta.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prêmios Disponíveis -->
+                <h3 class="premios-title">Prêmios da Raspadinha:</h3>
+                <div class="premios-container">
+                    <div class="premios-grid-scroll">
+                        <!-- Prêmios em grid 3x3 -->
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="images/R%241%2C00.webp" alt="R$1,00">
+                                <span class="premio-valor">R$1,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/tv.png" alt="Smart Tv 50">
+                                <span class="premio-valor">Smart Tv 50</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R%245%2C00.webp" alt="R$5,00">
+                                <span class="premio-valor">R$5,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R%2410%2C00.webp" alt="R$10,00">
+                                <span class="premio-valor">R$10,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R%2420%2C00.webp" alt="R$20,00">
+                                <span class="premio-valor">R$20,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/carro.png" alt="VW T‑Cross">
+                                <span class="premio-valor">Carro 0KM</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R%24100%2C00.webp" alt="R$100,00">
+                                <span class="premio-valor">R$100,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R%24200%2C00.webp" alt="R$200,00">
+                                <span class="premio-valor">R$200,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R$500,00.webp" alt="R$500,00">
+                                <span class="premio-valor">R$500,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/moto.png" alt="Cafeteira Espresso">
+                                <span class="premio-valor">Moto 0KM</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R5.webp" alt="R$5.000,00">
+                                <span class="premio-valor">R$8.000,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R10.webp" alt="R$10.000,00">
+                                <span class="premio-valor">R$10.000,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R1.webp" alt="R$1.000,00">
+                                <span class="premio-valor">R$1.000,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/casa.png" alt="Lava e Seca 14kg">
+                                <span class="premio-valor">Casa</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R15.webp" alt="R$15.000,00">
+                                <span class="premio-valor">R$15.000,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/maquinalavar.png" alt="Lava e Seca 14kg">
+                                <span class="premio-valor">Lava e Seca</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R%242%2C00.webp" alt="R$1,00">
+                                <span class="premio-valor">R$2,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R%24180%2C00.webp" alt="R$1,00">
+                                <span class="premio-valor">R$180,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/R5.webp" alt="R$1,00">
+                                <span class="premio-valor">R$4.800,00</span>
+                            </div>
+                        </div>
+                        <div class="premio-item">
+                            <div class="premio-box">
+                                <img src="./images/geladeira.png" alt="R$1,00">
+                                <span class="premio-valor">Geladeira</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Resultado -->
+    <div class="modal" id="modalResultado">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitulo"> Parabéns! 🎉</h3>
+                <button class="modal-close" id="fecharModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="resultado-imagem">
+                    <img src="" alt="Prêmio" id="imagemPremio">
+                </div>
+                <h4 id="resultadoTexto">Você ganhou!</h4>
+                <p class="valor-ganho">Você ganhou <strong id="valorGanho">R$ 0,00</strong></p>
+                <div class="resultado-info">
+                    <p>Seu saldo atual: <strong id="saldoAtualizado">R$ 0,00</strong></p>
+                    <p>Tentativas restantes: <span id="tentativasRestantes">0/3</span></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal" id="btnContinuar">Continuar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Final -->
+    <div class="modal" id="modalFinal">
+        <div class="modal-content final">
+            <div class="modal-header final-header">
+                <h3> Parabéns! 🎉</h3>
+            </div>
+            <div class="modal-body final-body">
+                <div class="final-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h4>Você completou todas as tentativas!</h4>
+                <div class="final-total">
+                    <p>Prêmio Total Acumulado</p>
+                    <h2 id="premioTotal">R$ 8.000,00</h2>
+                </div>
+            </div>
+            <div class="modal-footer final-footer">
+                <button class="btn-modal btn-resgatar" id="btnResgatar">
+                    <i class="fas fa-gift"></i> Resgatar seu prêmio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/raspadinha.js"></script>
+    <script src="js/latest.js" data-utmify-prevent-subids="true"></script>
+
+</body>
+
+</html>

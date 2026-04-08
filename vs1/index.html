@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raspadinha - Prêmio</title>
+
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" sizes="16x16">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- CONFETE PREMIUM -->
+  <script src="js/confetti.browser.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(180deg,
+          #0B63E5 0%,
+          /* Azul Viva Sorte forte */
+          #1E7BFF 40%,
+          /* Azul médio */
+          #4DA3FF 75%,
+          /* Azul claro */
+          #EAF2FF 100%
+          /* Branco azulado suave */
+        );
+
+      font-family: 'Montserrat', sans-serif;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      overflow-x: hidden;
+      min-height: 100vh;
+      padding-bottom: 20px;
+    }
+
+    header {
+      width: 100%;
+      height: 60px;
+
+      background: linear-gradient(90deg,
+          #0B63E5 0%,
+          /* Azul principal */
+          #1E7BFF 50%,
+          /* Azul destaque */
+          #0B63E5 100%
+          /* Azul principal */
+        );
+
+      padding: 12px 20px;
+
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+
+    header img {
+      height: 28px;
+    }
+
+    .barra-amarela {
+      width: 3px;
+      height: 20px;
+      border-radius: 6px;
+      background: #FFF100;
+    }
+
+    .titulo-raspadinha {
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .card {
+      width: 92%;
+      max-width: 420px;
+      margin-top: 130px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+      position: relative;
+      padding-top: 70px;
+    }
+
+    .presente-container {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .presente-container img {
+      width: 155px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .2));
+    }
+
+    .card-content {
+      text-align: center;
+    }
+
+    .titulo-parabens {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .texto-descricao {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #555;
+      margin: 10px 0;
+    }
+
+    .valor-premio {
+      font-size: 2.8rem;
+      font-weight: bold;
+      color: #ffa600;
+      margin-bottom: 15px;
+    }
+
+    .texto-instrucao {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    .botao-raspar {
+      width: 100%;
+
+      background: linear-gradient(135deg,
+          #0B63E5 0%,
+          /* Azul Viva Sorte principal */
+          #1E7BFF 45%,
+          /* Azul médio */
+          #4DA3FF 100%
+          /* Azul claro */
+        );
+
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 18px;
+
+      font-size: 1.2rem;
+      font-weight: 800;
+      font-family: 'Montserrat', sans-serif;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 6px 18px rgba(11, 99, 229, 0.45),
+        0 0 22px rgba(30, 123, 255, 0.35);
+
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    /* Hover */
+    .botao-raspar:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 10px 26px rgba(11, 99, 229, 0.55),
+        0 0 30px rgba(30, 123, 255, 0.45);
+    }
+
+    /* Active */
+    .botao-raspar:active {
+      transform: translateY(0);
+      box-shadow:
+        0 4px 14px rgba(11, 99, 229, 0.4);
+    }
+
+    @media (max-width: 430px) {
+      .titulo-parabens {
+        font-size: 2.2rem;
+      }
+
+      .valor-premio {
+        font-size: 2.4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <img id="logoHeader" src="images/logo.webp" alt="Logo">
+    <div class="barra-amarela"></div>
+    <span class="titulo-raspadinha">Raspadinha</span>
+  </header>
+
+  <div class="card">
+    <div class="presente-container">
+      <img id="imgPresente" src="images/presente.webp" alt="Presente">
+    </div>
+
+    <div class="card-content">
+      <h1 class="titulo-parabens">Parabéns</h1>
+      <p class="texto-descricao">Você ganhou três rodadas gratuitas para raspar e ganhar até</p>
+      <h2 class="valor-premio">R$ 15.000,00</h2>
+      <p class="texto-instrucao">Raspe agora clicando no botão abaixo!</p>
+      <button class="botao-raspar" id="botaoRaspar">Começar a Raspar</button>
+    </div>
+  </div>
+
+  <script>
+    // 🔍 FORÇAR BARRA FINAL (TRAILING SLASH) PARA EVITAR ERROS DE CAMINHO
+    if (window.location.pathname.endsWith('/vs1')) {
+      window.location.replace(window.location.href + '/');
+    }
+
+    // Função para obter parâmetros da URL
+    function capturarUTMs() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const utms = {};
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(u => {
+          utms[u] = urlParams.get(u) || 'direct';
+        });
+        return utms;
+      } catch (e) {
+        return { utm_source: 'direct' };
+      }
+    }
+
+    // Função para construir URL de redirecionamento
+    function redirecionarParaIdentificacao() {
+      const botao = document.getElementById('botaoRaspar');
+      botao.textContent = 'Carregando...';
+      botao.disabled = true;
+
+      // Pegamos o caminho base atual
+      let currentPath = window.location.pathname;
+      if (!currentPath.endsWith('/')) {
+        currentPath += '/';
+      }
+
+      const params = new URLSearchParams(capturarUTMs()).toString();
+      const targetUrl = currentPath + 'identificao/index.html?' + params;
+
+      console.log("Redirecionando para:", targetUrl);
+      window.location.href = targetUrl;
+    }
+
+    document.getElementById('botaoRaspar').addEventListener('click', redirecionarParaIdentificacao);
+  </script>
+
+  <!-- CONFETE -->
+  <script>
+    function confeteCarnaval() {
+      if (typeof confetti === 'function') {
+        const end = Date.now() + 2000;
+        (function frame() {
+          confetti({ particleCount: 3, angle: 60, spread: 80, origin: { x: 0 }, colors: ['#FFE600', '#3F8BFC'] });
+          confetti({ particleCount: 3, angle: 120, spread: 80, origin: { x: 1 }, colors: ['#FFE600', '#3F8BFC'] });
+          if (Date.now() < end) requestAnimationFrame(frame);
+        }());
+      }
+    }
+    window.addEventListener('load', confeteCarnaval);
+  </script>
+</body>
+
+</html>
